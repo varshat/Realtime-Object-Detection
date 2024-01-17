@@ -28,7 +28,7 @@ Allow camera access when prompted.
 Point the camera at objects, and the application will perform real-time object detection and announce the identified objects.
 
 ## Demo
-For a live demo, visit https://varshat.github.io/Realtime-Object-Detection/.
+For a live demo, visit [https://varshat.github.io/Realtime-Object-Detection/.](https://varshat.github.io/)
 
 ## Acknowledgments
 This project uses the MobileNet model provided by TensorFlow.js.
