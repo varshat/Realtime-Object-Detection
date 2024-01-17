@@ -19,6 +19,7 @@ Web Speech API: Used for the text-to-speech functionality.
 
 ## How to Use
 Clone the repository:
+https://github.com/varshat/Realtime-Object-Detection.git
 
 Open the index.html file in a modern web browser.
 
