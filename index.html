@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>obj Detection</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        header {
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 10px;
+        }
+
+        nav {
+            background-color: #444;
+            color: #fff;
+            padding: 10px;
+            text-align: center;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #fff;
+            margin: 0 15px;
+        }
+
+        section {
+            padding: 20px;
+            margin: 20px;
+            background-color: #fff;
+            border-radius: 5px;
+        }
+
+        footer {
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 10px;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>Realtime Object Detection</h1>
+    </header>
+    <section>
+        <h2>Main Content</h2>
+        <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest"> </script>
+        <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/mobilenet@1.0.0"> </script>
+    
+        <video id="video" autoplay muted playinline></video>
+        <canvas id="canvas" width="500" height="500" style="display: none;"></canvas>
+        <div id="status"></div>
+        <script>
+            (async () => {
+                const model = await mobilenet.load()
+                const status = document.getElementById('status')
+                const video = document.getElementById('video')
+                const canvas = document.getElementById('canvas')
+                const context = canvas.getContext('2d')
+                var msg = new SpeechSynthesisUtterance();
+                const stream = await navigator.mediaDevices.getUserMedia ({
+                    audio: false,
+                    video: {
+                        facingMode: 'environment'
+                    }
+                })
+                
+                video.srcObject = stream
+                predict()
+                
+                async function predict() {
+                    context.drawImage(video, 0, 0, 500, 500)
+                    const predictions = await model.classify(canvas)
+                    status.innerHTML = `Prediction: ${predictions[0].className} / ${predictions[0]
+                    .probability}`
+                    
+                    msg.text = predictions[0].className;
+                    window.speechSynthesis.speak(msg);
+                    requestAnimationFrame(predict)
+                }
+            })()
+        // stream -> raw stream of video
+    </script>
+    </section>
+
+    <footer>
+        &copy; 2024 Your Website Name. All Rights Reserved.
+    </footer>
+    
+</body>
+</html>
+
